@@ -1,11 +1,22 @@
 # NITHwebcamWrapper
+<<<<<<< Updated upstream
 _A wrapper for turning a webcam into a NITH sensor, adding movement detection capabilities_
+=======
+_A python script to turn a normal webcam into a sensor capable to detect some movement features and output them through NITH protocol_
+>>>>>>> Stashed changes
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/LIMUNIMI/NITHwebcamWrapper/main/Readme_images/NITHwebcamWrapper.png" width="50%" />
 </p>
 
+<<<<<<< Updated upstream
 NITHwebcamWrapper is a Python script which extracts facial movement features in real-time by analizing the video stream of a webcam. It's part of the [NithSensors](https://github.com/LIMUNIMI/NITHsensors) collection, and it's built to be used for interaction purposes.
+=======
+## Overview
+
+NITHwebcamWrapper is part of NITH, a framework for building software tools for accessibility for people with quadriplegic or other kind of motor disabilities which hinder hand movements.
+It's Python script which extracts facial movement features in real-time by analizing the video stream of a webcam. It's part of the [NithSensors](https://github.com/LIMUNIMI/NITHsensors) collection, and it's built to be used for interaction purposes.
+>>>>>>> Stashed changes
 
 The currently extracted facial movement features are:
 - Head rotation (yaw and pitch)

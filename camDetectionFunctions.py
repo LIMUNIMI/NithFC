@@ -5,11 +5,12 @@ from typing import NamedTuple
 
 # from shapely.geometry import Polygon
 
-
 class Point(NamedTuple):
     x: float
     y: float
 
+# An hardcoded value to try to normalize eyebrow aperture ratio vs front nose ratio
+eyebrow_nose_normalizer = 4.28
 
 # Define the landmarks for the face and eyes
 face_border_indices = [
@@ -87,6 +88,14 @@ right_eye_indices = [
     246,
 ]
 
+left_eyebrow_top = 296
+left_eyebrow_base = 297
+right_eyebrow_top = 66
+right_eyebrow_base = 67
+front_nose_top = 10
+front_nose_bottom = 9
+left_eyebrow_pairs = [(336, 338), (296, 297)]
+right_eyebrow_pairs = [(66, 67), (107, 109)]
 
 def get_distance(p1: Point, p2: Point) -> float:
     """
@@ -167,6 +176,82 @@ def get_face_orientation(face_landmarks, img_w, img_h):
 
     return x, y, z
 
+def get_eyebrows_ratio_2(face_landmarks) -> float:
+    LLmtop = face_landmarks.landmark[338]
+    LLmbot = face_landmarks.landmark[336]
+    LLetop = face_landmarks.landmark[297]
+    LLebot = face_landmarks.landmark[296]
+    RRmtop = face_landmarks.landmark[109]
+    RRmbot = face_landmarks.landmark[107]
+    RRetop = face_landmarks.landmark[67]
+    RRebot = face_landmarks.landmark[66]
+
+    NOlandmarks = [
+        face_landmarks.landmark[front_nose_top],
+        face_landmarks.landmark[front_nose_bottom],
+    ]
+
+    # Calculate distances
+    LLm = get_distance(LLmtop, LLmbot)
+    LLe = get_distance(LLetop, LLebot)
+    RRm = get_distance(RRmtop, RRmbot)
+    RRe = get_distance(RRetop, RRebot)
+
+    NOd = get_distance(NOlandmarks[0], NOlandmarks[1])
+
+    # distances averages
+    LL = (LLm + LLe) / 2
+    RR = (RRm + RRe) / 2
+
+    Left_aperture = LL / NOd if NOd > 0 else 0
+    Right_aperture = RR / NOd if NOd > 0 else 0
+
+    average = Left_aperture + Right_aperture / 2
+
+    return average
+
+def get_left_eyebrow_aperture_ratio(face_landmarks) -> float:
+    # Landmarks for left eyebrow
+    LElandmarks = [
+        face_landmarks.landmark[left_eyebrow_top],
+        face_landmarks.landmark[left_eyebrow_base],
+    ]
+    NOlandmarks = [
+        face_landmarks.landmark[front_nose_top],
+        face_landmarks.landmark[front_nose_bottom],
+    ]
+
+    # Calculate distances
+    LEd = get_distance(LElandmarks[0], LElandmarks[1])
+    NOd = get_distance(NOlandmarks[0], NOlandmarks[1])
+
+    # Calculate ratios
+    LEratio = LEd / NOd if NOd > 0 else 0
+
+    return LEratio
+
+def get_right_eyebrow_aperture_ratio(face_landmarks) -> float:
+    # Landmarks for right eyebrow
+    RElandmarks = [
+        face_landmarks.landmark[right_eyebrow_top],
+        face_landmarks.landmark[right_eyebrow_base],
+    ]
+    NOlandmarks = [
+        face_landmarks.landmark[front_nose_top],
+        face_landmarks.landmark[front_nose_bottom],
+    ]
+
+    # Calculate distances
+    REd = get_distance(RElandmarks[0], RElandmarks[1])
+    NOd = get_distance(NOlandmarks[0], NOlandmarks[1])
+
+    # Calculate ratios
+    REratio = REd / NOd if NOd > 0 else 0
+
+    return REratio
+
+def get_eyebrows_aperture_average(face_landmarks) -> float:
+    return (get_left_eyebrow_aperture_ratio(face_landmarks) + get_right_eyebrow_aperture_ratio(face_landmarks)) / 2
 
 def get_eye_aperture_ratio_SEGMENTSMETHOD(face_landmarks):
     # Landmarks for eye width calculation

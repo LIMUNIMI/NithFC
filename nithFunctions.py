@@ -2,7 +2,7 @@ import numpy as np
 from udpFunctions import send_generic_udp_message
 
 
-SENSORNAME = "NITHfaceCam"
+SENSORNAME = "NITHwebcamWrapper"
 SENSORVERSION = "0.1.0"
 OPCODE = "OPR"
 MOUTH_APERTURE_MAX = str(0.6)
@@ -33,6 +33,7 @@ def send_data(pitch, yaw, roll, mouth_aperture, left_eye_aperture, right_eye_ape
         + "&eyeRight_ape="
         + str(np.round(right_eye_aperture, 2))
         # + EYES_APERTURE_MAX
-        + "$"
+        + "&whistle_intensity=[50/75/100]"  
+        + "^"
     )
     send_generic_udp_message(message)
