@@ -41,13 +41,34 @@ git clone https://github.com/LIMUNIMI/NITHwebcamWrapper.git
 
 ### Step 3: Installing Dependencies
 
-With Python installed, open your command line or terminal and install the required dependencies by running:
+It's recommended to create a virtual environment to keep the project dependencies isolated from your system Python installation. This prevents potential conflicts with other Python projects.
 
+1. **Create a virtual environment** (optional but recommended):
+   ```bash
+   python -m venv venv
+   ```
+
+2. **Activate the virtual environment**:
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
+3. **Install the required dependencies** using the provided requirements.txt file:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+This will install all necessary packages including OpenCV, NumPy, MediaPipe, and other dependencies required for computer vision operations, facial landmark extraction, and UDP communication.
+
+**Note**: If you prefer to install dependencies manually instead of using requirements.txt, you can run:
 ```bash
-pip install opencv-python numpy mediapipe python-osc
+pip install opencv-python numpy mediapipe
 ```
-
-These dependencies include packages for computer vision operations, mathematics, data handling, extracting facial landmarks, and sending data over UDP.
 
 ## Running NITHwebcamWrapper
 To run NITHwebcamWrapper, ensure you're in the NITHwebcamWrapper directory in your command line or terminal. Then execute:

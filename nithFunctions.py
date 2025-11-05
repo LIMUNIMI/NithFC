@@ -33,7 +33,6 @@ def send_data(pitch, yaw, roll, mouth_aperture, left_eye_aperture, right_eye_ape
         + "&eyeRight_ape="
         + str(np.round(right_eye_aperture, 2))
         # + EYES_APERTURE_MAX
-        + "&whistle_intensity=[50/75/100]"  
         + "^"
     )
     send_generic_udp_message(message)

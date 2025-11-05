@@ -211,7 +211,7 @@ def main_loop():
                 1,
             )
             
-            yaw_text = f"Yaw: {np.round(x, 2):.2f}"
+            yaw_text = f"Yaw: {np.round(y, 2):.2f}"
             (text_width, text_height), _ = cv2.getTextSize(yaw_text, cv2.FONT_HERSHEY_PLAIN, 0.8, 1)
             cv2.rectangle(image, (img_w - 205, 25), (img_w - 5, 45 + text_height), (64, 64, 64), -1)
             cv2.putText(
@@ -224,7 +224,7 @@ def main_loop():
                 1,
             )
             
-            pitch_text = f"Pitch: {np.round(y, 2):.2f}"
+            pitch_text = f"Pitch: {np.round(x, 2):.2f}"
             (text_width, text_height), _ = cv2.getTextSize(pitch_text, cv2.FONT_HERSHEY_PLAIN, 0.8, 1)
             cv2.rectangle(image, (img_w - 205, 45), (img_w - 5, 65 + text_height), (64, 64, 64), -1)
             cv2.putText(
